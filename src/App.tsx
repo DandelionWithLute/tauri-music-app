@@ -15,7 +15,6 @@ function App() {
   // sth else...
   const [currentDir, setCurrentDir] = useState("");
   const [currentSection, setCurrentSection] = useState("folder");
-  const [mainContainerVisibility, setMainContainerVisibility] = useState(false);
 
   async function tauriInitialization() {
     const appDataDirPath = await appDataDir();
