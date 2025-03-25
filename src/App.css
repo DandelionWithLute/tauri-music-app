@@ -7,3 +7,12 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+@font-face {
+  font-family: "wk-md";
+  src: url("/fonts/LXGWWenKai-Medium.ttf");
+}
+
+.bg-img-1 {
+  background-image: url("/public/snow-tree.jpg");
+}

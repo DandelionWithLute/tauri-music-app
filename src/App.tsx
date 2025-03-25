@@ -31,8 +31,8 @@ function App() {
   }, []);
 
   return (
-    <div>
-      <p>123</p>
+    <div className="font-wk-md bg-img-1">
+      <p>美妙的字体和背景</p>
       <div className="text-red-500">{AppDataDir}</div>
       <div>{ReadDir}</div>
       <div>{DataDir}</div>
