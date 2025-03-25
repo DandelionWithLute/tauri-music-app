@@ -14,5 +14,29 @@
 }
 
 .bg-img-1 {
-  background-image: url("/public/snow-tree.jpg");
+  /* https://unsplash.com/photos/a-person-standing-in-the-snow-in-front-of-a-forest--mFKPfXXUG0 */
+  background-image: url("/snow-tree.jpg");
+}
+.bg-img-2 {
+  /* https://unsplash.com/photos/a-view-of-a-mountain-covered-in-clouds-O_vfjjh6t3k */
+  background-image: url("/mountain-cloud.jpg");
+  background-size: cover;
+  background-position: left bottom;
+}
+.bg-img-3 {
+  /* https://unsplash.com/photos/a-person-standing-on-a-beach-with-a-surfboard-tcwre0Ws7dw */
+  background-image: url("/beach-ocean.jpg");
+  background-size: cover;
+  background-position: left;
+}
+.bg-img-4 {
+  /* https://unsplash.com/photos/a-vase-filled-with-flowers-next-to-a-window-Yty-rHVuihY */
+  background-image: url("/red-white-flower-sm.jpg");
+  background-size: cover;
+  background-position-y: 50%;
+}
+.bg-img-5 {
+  /* https://unsplash.com/photos/withered-tree-surrounded-with-snow-during-daytime-Du41jIaI5Ww */
+  background-image: url("/snow-tree-single.jpg");
+  background-size: cover;
 }
