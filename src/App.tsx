@@ -29,15 +29,15 @@ function App() {
 
   async function tauriInitialization() {
     const desktopPath = await desktopDir();
-    console.log(desktopPath)
+    console.log(desktopPath);
     setCurrentDir(desktopPath);
     if (currentDirRef.current) currentDirRef.current.value = desktopPath;
     setReadDir(await fetchDir(desktopPath));
-    console.log( await fetchDir(desktopPath));
+    console.log(await fetchDir(desktopPath));
   }
 
   async function fetchDir(val: string) {
-    return await readDir("C:\\Users", {
+    return await readDir(val, {
       baseDir: BaseDirectory.AppLocalData,
     });
   }
