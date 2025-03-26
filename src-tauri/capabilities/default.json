@@ -6,12 +6,21 @@
   "permissions": [
     "core:default",
     "opener:default",
+    "fs:default",
+    "fs:allow-app-read-recursive",
+    "fs:allow-app-write-recursive",
     "fs:read-all",
     "fs:write-all",
     "fs:scope-app-recursive",
+    "core:path:default",
     {
       "identifier": "fs:scope",
-      "allow": [{ "path": "/*" }]
-    }
+      "allow": [
+        {
+          "path": "*"
+        }
+      ]
+    },
+    "os:default"
   ]
 }

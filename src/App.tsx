@@ -1,32 +1,45 @@
 import "./App.css";
-import { useEffect, useState } from "react";
-import { appDataDir } from "@tauri-apps/api/path";
-import { readDir, BaseDirectory } from "@tauri-apps/plugin-fs";
-import { dataDir } from "@tauri-apps/api/path";
+import { useEffect, useRef, useState } from "react";
+import { readDir, BaseDirectory, DirEntry } from "@tauri-apps/plugin-fs";
+import { dataDir, desktopDir } from "@tauri-apps/api/path";
+import { platform } from "@tauri-apps/plugin-os";
 import { AnimatePresence, motion } from "motion/react";
-import { FolderClosed, FolderOpen } from "lucide-react";
+import {
+  File,
+  FileSymlink,
+  Folder,
+  FolderClosed,
+  FolderOpen,
+  FolderSearch,
+  FolderSymlink,
+} from "lucide-react";
 
 function App() {
   // tauriInitialization
   // https://v2.tauri.app/plugin/file-system/#scopes
   const [AppDataDir, setAppDataDir] = useState("");
-  const [ReadDir, setReadDir] = useState("");
-  const [DataDir, setDataDir] = useState("");
+  const [ReadDir, setReadDir] = useState<DirEntry[]>();
   // sth else...
   const [currentDir, setCurrentDir] = useState("");
   const [currentSection, setCurrentSection] = useState("folder");
+  // ref
+  const currentDirRef = useRef<HTMLInputElement>(null);
+
+  const currentPlatform = platform();
 
   async function tauriInitialization() {
-    const appDataDirPath = await appDataDir();
-    setAppDataDir(appDataDirPath);
-    setCurrentDir(appDataDirPath);
-    const entries = await readDir("/", {
+    const desktopPath = await desktopDir();
+    console.log(desktopPath)
+    setCurrentDir(desktopPath);
+    if (currentDirRef.current) currentDirRef.current.value = desktopPath;
+    setReadDir(await fetchDir(desktopPath));
+    console.log( await fetchDir(desktopPath));
+  }
+
+  async function fetchDir(val: string) {
+    return await readDir("C:\\Users", {
       baseDir: BaseDirectory.AppLocalData,
     });
-    console.log(entries, BaseDirectory.AppLocalData);
-
-    const dataDirPath = await dataDir();
-    setDataDir(dataDirPath);
   }
 
   useEffect(() => {
@@ -68,9 +81,51 @@ function App() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="w-full h-full flex flex-col relative"
+            // p-5 here will make page overflow
           >
             <div className="absolute w-full h-full bg-white opacity-80 -z-40"></div>
-            <div>123456</div>
+            <div className="min-h-20"></div>
+            <div className="flex fixed w-[calc(100vw-250px)] ml-5 mt-5">
+              <FolderSearch className="absolute top-3 left-3" />
+              <input
+                ref={currentDirRef}
+                className="border rounded-md p-3 pl-12 w-full flex items-center ring-0 outline-none"
+              />
+            </div>
+            <div className="px-5 flex flex-col overflow-y-scroll">
+              {/* location bar ctrl+l */}
+              <div className="">
+                {ReadDir?.map(
+                  (i: any) =>
+                    i.isDirectory && (
+                      <div
+                        key={i.name}
+                        onClick={() => {
+                          if (currentPlatform == "windows") {
+                          } else {
+                          }
+                        }}
+                        className="p-3 border rounded-sm flex gap-3 select-none cursor-pointer"
+                      >
+                        {i.isSymlink ? <FolderSymlink /> : <Folder />}
+                        {i.name}
+                      </div>
+                    )
+                )}
+                {ReadDir?.map(
+                  (i: any) =>
+                    i.isFile && (
+                      <div
+                        key={i.name}
+                        className="p-3 border rounded-sm flex gap-3 select-none cursor-pointer"
+                      >
+                        {i.isSymlink ? <FileSymlink /> : <File />}
+                        {i.name}
+                      </div>
+                    )
+                )}
+              </div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
