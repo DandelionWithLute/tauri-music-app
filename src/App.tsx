@@ -12,7 +12,10 @@ import {
   FolderOpen,
   FolderSearch,
   FolderSymlink,
+  Notebook,
+  NotebookText,
 } from "lucide-react";
+import Note from "./Note";
 
 function App() {
   // tauriInitialization
@@ -70,6 +73,20 @@ function App() {
             <div>文件夹</div>
             {/* <div className="absolute h-full left-0 bg-red-500 rounded-l-md -z-10"></div> */}
           </div>
+          <div
+            onClick={() => {
+              currentSection == "note"
+                ? setCurrentSection("")
+                : setCurrentSection("note");
+            }}
+            className={`h-12 z-0 relative flex gap-3 items-center px-3 ${
+              currentSection == "note" ? "border-2 border-slate-800" : "border"
+            } border-slate-300 rounded-md bg-slate-50 cursor-pointer select-none hover:bg-gray-200`}
+          >
+            {currentSection == "note" ? <NotebookText /> : <Notebook />}
+            <div>笔记</div>
+            {/* <div className="absolute h-full left-0 bg-red-500 rounded-l-md -z-10"></div> */}
+          </div>
         </div>
       </div>
       {/* Main Container */}
@@ -81,7 +98,7 @@ function App() {
             currentPlatform={currentPlatform}
           />
         )}
-        {currentSection == "notes" && <motion.div>123</motion.div>}
+        {currentSection == "note" && <Note />}
       </AnimatePresence>
       {/* Absolute Bottom Bar */}
     </div>
